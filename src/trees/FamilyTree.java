@@ -33,6 +33,8 @@ public class FamilyTree
         {
             // Add childNode to this node's children list. Also
             // set childNode's parent to this node.
+        	this.children.add(childNode);
+        	childNode.parent = this;
         }
         
         
@@ -41,12 +43,14 @@ public class FamilyTree
         TreeNode getNodeWithName(String targetName)
         {
             // Does this node have the target name?
-            if (?????)
+            if (this.getName().equals(targetName))
                 return this;
                     
             // No, recurse. Check all children of this node.
             for (TreeNode child: children)
             {
+            	if(child.getNodeWithName(targetName) != null)
+            		return child.getNodeWithName(targetName);
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
             }
@@ -66,6 +70,11 @@ public class FamilyTree
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
             // draw a tree, mark any leaf node, and then mark its ancestors in order from
             // recent to ancient. Expect a question about this on the final exam.
+            TreeNode par = this.parent;
+            	while(par != null) {
+            		ancestors.add(par);
+            		par = par.parent;
+            	}
 
             return ancestors;
         }
@@ -160,6 +169,7 @@ public class FamilyTree
 	// "Depth" of a node is the "distance" between that node and the root. The depth of the root is 0. The
 	// depth of the root's immediate children is 1, and so on.
 	//
+	
 	TreeNode getMostRecentCommonAncestor(String name1, String name2) throws TreeException
 	{
 		// Get nodes for input names.
